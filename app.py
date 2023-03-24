@@ -1,6 +1,6 @@
 import pickle
 import numpy as np
-from flask import Flask, request
+from flask import Flask, request, make_response
 from flask_cors import CORS
 
 
@@ -27,7 +27,9 @@ def get_prediction():
         data = request.get_json()
         data = np.array(data)[np.newaxis, :]
         prediction = model.predict(data)
-        return str(prediction[0])
+        response = make_response(str(prediction[0]))
+        response.headers['Access-Control-Allow-Origin'] = '*'
+        return response
 
     return 'Invalid request'
 
