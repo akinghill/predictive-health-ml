@@ -11,7 +11,7 @@ CORS(app)
 
 def load_model():
     global model
-    with open('./heart_disease.pkl', 'rb') as f:
+    with open('./models/heart_disease.pkl', 'rb') as f:
         model = pickle.load(f)
 
 
@@ -24,8 +24,6 @@ def home_endpoint():
 def get_prediction():
 
     if request.method == 'POST':
-        print('data', flush=True)
-        print(request.json, flush=True)
         data = request.get_json()
         data = np.array(data)[np.newaxis, :]
         prediction = model.predict(data)
